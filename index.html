@@ -182,10 +182,38 @@
     <script>
         var tokenInp = document.getElementById('tokenInp');
         var clearBtn = document.getElementById('clearBtn');
-        tokenInp.addEventListener('input', function() { if (tokenInp.value.length === 0) { clearBtn.classList.add('hidden'); } else { clearBtn.classList.remove('hidden'); } });
-        function clearInput() { tokenInp.value = ''; clearBtn.classList.add('hidden'); tokenInp.focus(); }
-        tokenInp.addEventListener("keypress", function(event) { if (event.key === "Enter") { event.preventDefault(); processToken(); } });
-        function extractEatToken(input) { if (input.includes('eat=')) { var match = input.match(/[?&]eat=([^&]+)/); if (match && match[1]) { return match[1]; } } return input; }
+        
+        tokenInp.addEventListener('input', function() { 
+            if (tokenInp.value.length === 0) { 
+                clearBtn.classList.add('hidden'); 
+            } else { 
+                clearBtn.classList.remove('hidden'); 
+            } 
+        });
+        
+        function clearInput() { 
+            tokenInp.value = ''; 
+            clearBtn.classList.add('hidden'); 
+            tokenInp.focus(); 
+        }
+        
+        tokenInp.addEventListener("keypress", function(event) { 
+            if (event.key === "Enter") { 
+                event.preventDefault(); 
+                processToken(); 
+            } 
+        });
+        
+        function extractEatToken(input) { 
+            if (input.includes('eat=')) { 
+                var match = input.match(/[?&]eat=([^&]+)/); 
+                if (match && match[1]) { 
+                    return match[1]; 
+                } 
+            } 
+            return input; 
+        }
+        
         function processToken() {
             var input = tokenInp.value.trim();
             var btn = document.getElementById('btn');
@@ -193,26 +221,50 @@
             var errBox = document.getElementById('error-box');
             var errorTitle = document.getElementById('error-title');
             var errorMessage = document.getElementById('error-message');
+            
             out.classList.add('hidden');
             errBox.classList.add('hidden');
-            if(!input) { tokenInp.focus(); return; }
+            
+            if(!input) { 
+                tokenInp.focus(); 
+                return; 
+            }
+            
             var eatToken = extractEatToken(input);
-            if (!eatToken) { errorTitle.innerText = 'Invalid Input'; errorMessage.innerText = 'Please provide a valid URL or eat token.'; errBox.classList.remove('hidden'); return; }
+            
+            if (!eatToken) { 
+                errorTitle.innerText = 'Invalid Input'; 
+                errorMessage.innerText = 'Please provide a valid URL or eat token.'; 
+                errBox.classList.remove('hidden'); 
+                return; 
+            }
+            
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERATING...';
             btn.disabled = true;
-            var apiUrl = 'https://cors-anywhere.herokuapp.com/http://168.119.49.69:2002/access?access_token=' + encodeURIComponent(eatToken);
-            fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json' } })
-            .then(function(res) { return res.json(); })
+            
+            var apiUrl = 'https://corsproxy.io/?' + encodeURIComponent('http://168.119.49.69:2002/access?access_token=' + encodeURIComponent(eatToken));
+            
+            fetch(apiUrl, { 
+                method: 'GET', 
+                headers: { 
+                    'Accept': 'application/json'
+                } 
+            })
+            .then(function(res) { 
+                return res.json(); 
+            })
             .then(function(result) {
                 document.getElementById('apiResponseDisplay').innerText = JSON.stringify(result, null, 2);
+                
                 if (result.error && result.error.includes("Failed to extract")) {
                     errorTitle.innerText = 'Invalid Token';
-                    errorMessage.innerText = 'Wrong/Expired eat token. Please login again.';
+                    errorMessage.innerText = 'Wrong or expired eat token. Please login again.';
                     errBox.classList.remove('hidden');
                     btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>';
                     btn.disabled = false;
                     return;
                 }
+                
                 if (result.user_info) {
                     document.getElementById('nick').innerText = result.user_info.nickname || '--';
                     document.getElementById('reg').innerText = result.user_info.noti_region || result.user_info.region || '--';
@@ -222,28 +274,34 @@
                     document.getElementById('reg').innerText = result.noti_region || result.region || '--';
                     document.getElementById('aid').innerText = result.accountId || result.account_id || '--';
                 }
+                
                 out.classList.remove('hidden');
                 btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>';
                 btn.disabled = false;
             })
             .catch(function(error) {
-                errorTitle.innerText = 'Network Error';
+                errorTitle.innerText = 'NETWORK ERROR';
                 errorMessage.innerText = 'Please check your connection.';
                 errBox.classList.remove('hidden');
                 btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>';
                 btn.disabled = false;
             });
         }
+        
         function copyApiResponse() {
             var text = document.getElementById('apiResponseDisplay').innerText;
             var copyBtn = document.getElementById('copyBtn');
+            
             if(text && text !== "Waiting for response...") {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(function() {
                         var originalText = copyBtn.innerText;
                         copyBtn.innerText = "COPIED!";
                         copyBtn.classList.add('bg-green-600');
-                        setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
+                        setTimeout(function() { 
+                            copyBtn.innerText = originalText; 
+                            copyBtn.classList.remove('bg-green-600'); 
+                        }, 2000);
                     }).catch(function() {
                         var textarea = document.createElement('textarea');
                         textarea.value = text;
@@ -257,7 +315,10 @@
                         var originalText = copyBtn.innerText;
                         copyBtn.innerText = "COPIED!";
                         copyBtn.classList.add('bg-green-600');
-                        setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
+                        setTimeout(function() { 
+                            copyBtn.innerText = originalText; 
+                            copyBtn.classList.remove('bg-green-600'); 
+                        }, 2000);
                     });
                 } else {
                     var textarea = document.createElement('textarea');
@@ -272,14 +333,30 @@
                     var originalText = copyBtn.innerText;
                     copyBtn.innerText = "COPIED!";
                     copyBtn.classList.add('bg-green-600');
-                    setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
+                    setTimeout(function() { 
+                        copyBtn.innerText = originalText; 
+                        copyBtn.classList.remove('bg-green-600'); 
+                    }, 2000);
                 }
             }
         }
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        
+        function openModal(id) { 
+            document.getElementById(id).classList.add('active'); 
+        }
+        
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+        }
+        
         var modals = document.querySelectorAll('.modal-overlay');
-        for (var i = 0; i < modals.length; i++) { modals[i].addEventListener('click', function(e) { if(e.target === this) { this.classList.remove('active'); } }); }
+        for (var i = 0; i < modals.length; i++) { 
+            modals[i].addEventListener('click', function(e) { 
+                if(e.target === this) { 
+                    this.classList.remove('active'); 
+                } 
+            }); 
+        }
     </script>
 </body>
 </html>
