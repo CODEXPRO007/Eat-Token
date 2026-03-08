@@ -19,14 +19,11 @@
         .btn-grad:hover { background-position: right center; box-shadow: 0 0 30px rgba(217, 70, 239, 0.5); transform: translateY(-1px); }
         .social-icon-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); transition: 0.2s; }
         .social-icon-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-        .token-box { background: #0f0f11; border: 1px dashed #333; color: #a855f7; font-family: monospace; word-break: break-all; white-space: normal; }
         .response-box { background: #0a0a0f; border: 1px solid #2a2a35; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 11px; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
         .modal-overlay { background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .animate-in { animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .copy-success { background-color: #10b981 !important; }
-        .error-token { background-color: rgba(239, 68, 68, 0.2) !important; border-color: #ef4444 !important; }
     </style>
 </head>
 <body>
@@ -109,28 +106,27 @@
             var eatToken = extractEatToken(input);
             if (!eatToken) { errorTitle.innerText = 'Invalid Input'; errorMessage.innerText = 'Please provide a valid URL or eat token.'; errBox.classList.remove('hidden'); return; }
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERATING...'; btn.disabled = true;
-            var apiUrl = 'https://corsproxy.io/?' + encodeURIComponent('http://168.119.49.69:2002/access?access_token=' + encodeURIComponent(eatToken));
-            fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json' } })
-            .then(function(res) { return res.json(); })
+            var apiUrl = "https://api.codetabs.com/v1/proxy?quest=" + 
+encodeURIComponent("http://168.119.49.69:2002/access?access_token=" + eatToken);
+            fetch(apiUrl, { method: 'GET' })
+            .then(function(res) { return res.text(); })
+            .then(function(text) { 
+                try { return JSON.parse(text); } 
+                catch(e) { throw new Error('Invalid JSON response'); } 
+            })
             .then(function(result) {
                 document.getElementById('apiResponseDisplay').innerText = JSON.stringify(result, null, 2);
                 if (result.error && result.error.includes("Failed to extract")) {
                     errorTitle.innerText = 'Invalid Token'; errorMessage.innerText = 'Wrong or expired eat token. Please login again.'; errBox.classList.remove('hidden');
                     btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>'; btn.disabled = false; return;
                 }
-                if (result.user_info) {
-                    document.getElementById('nick').innerText = result.user_info.nickname || '--';
-                    document.getElementById('reg').innerText = result.user_info.noti_region || result.user_info.region || '--';
-                    document.getElementById('aid').innerText = result.user_info.accountId || result.user_info.account_id || '--';
-                } else {
-                    document.getElementById('nick').innerText = result.nickname || '--';
-                    document.getElementById('reg').innerText = result.noti_region || result.region || '--';
-                    document.getElementById('aid').innerText = result.accountId || result.account_id || '--';
-                }
+                document.getElementById('nick').innerText = result.nickname || result.user_info?.nickname || '--';
+                document.getElementById('reg').innerText = result.noti_region || result.region || result.user_info?.noti_region || '--';
+                document.getElementById('aid').innerText = result.accountId || result.account_id || result.user_info?.accountId || '--';
                 out.classList.remove('hidden'); btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>'; btn.disabled = false;
             })
             .catch(function(error) {
-                errorTitle.innerText = 'NETWORK ERROR'; errorMessage.innerText = 'Please check your connection.'; errBox.classList.remove('hidden');
+                errorTitle.innerText = 'NETWORK ERROR'; errorMessage.innerText = 'Please check your connection or try again.'; errBox.classList.remove('hidden');
                 btn.innerHTML = 'GENERATE ACCESS <i class="fas fa-arrow-right text-xs"></i>'; btn.disabled = false;
             });
         }
@@ -141,17 +137,14 @@
                     navigator.clipboard.writeText(text).then(function() {
                         var originalText = copyBtn.innerText; copyBtn.innerText = "COPIED!"; copyBtn.classList.add('bg-green-600');
                         setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
-                    }).catch(function() {
-                        var textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); textarea.setSelectionRange(0, 99999); document.execCommand('copy'); document.body.removeChild(textarea);
-                        var originalText = copyBtn.innerText; copyBtn.innerText = "COPIED!"; copyBtn.classList.add('bg-green-600');
-                        setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
-                    });
-                } else {
-                    var textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); textarea.setSelectionRange(0, 99999); document.execCommand('copy'); document.body.removeChild(textarea);
-                    var originalText = copyBtn.innerText; copyBtn.innerText = "COPIED!"; copyBtn.classList.add('bg-green-600');
-                    setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
-                }
+                    }).catch(function() { fallbackCopy(text, copyBtn); });
+                } else { fallbackCopy(text, copyBtn); }
             }
+        }
+        function fallbackCopy(text, copyBtn) {
+            var textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0'; document.body.appendChild(textarea); textarea.select(); textarea.setSelectionRange(0, 99999); document.execCommand('copy'); document.body.removeChild(textarea);
+            var originalText = copyBtn.innerText; copyBtn.innerText = "COPIED!"; copyBtn.classList.add('bg-green-600');
+            setTimeout(function() { copyBtn.innerText = originalText; copyBtn.classList.remove('bg-green-600'); }, 2000);
         }
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
