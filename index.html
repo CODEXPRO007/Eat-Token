@@ -200,7 +200,7 @@
             if (!eatToken) { errorTitle.innerText = 'Invalid Input'; errorMessage.innerText = 'Please provide a valid URL or eat token.'; errBox.classList.remove('hidden'); return; }
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERATING...';
             btn.disabled = true;
-            var apiUrl = 'http://168.119.49.69:2002/access?access_token=' + encodeURIComponent(eatToken);
+            var apiUrl = 'https://cors-anywhere.herokuapp.com/http://168.119.49.69:2002/access?access_token=' + encodeURIComponent(eatToken);
             fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json' } })
             .then(function(res) { return res.json(); })
             .then(function(result) {
